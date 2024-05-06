@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 #define PORT 8080
-#define MAX_LENGTH 1024
+#define MAX_LENGTH 8192
 
 void error(const char *msg) {
     perror(msg);
@@ -34,26 +34,27 @@ int main(int argc, char *argv[]) {
     }
 
     while (1) {
-        printf("Please enter the command: ");
-        memset(buffer, 0, MAX_LENGTH);
-        fgets(buffer, MAX_LENGTH - 1, stdin);
-         if (strncmp(buffer, "exit", 4) == 0)
-            break;
+    printf("You: ");
+    memset(buffer, 0, MAX_LENGTH);
+    fgets(buffer, MAX_LENGTH - 1, stdin);
+    
+    // Send the message to the server
+    send(sockfd, buffer, strlen(buffer), 0);
 
-        n = write(sockfd, buffer, strlen(buffer));
-        if (n < 0)
-            error("ERROR writing to socket");
+    // Check if the user wants to exit
+    if (strncmp(buffer, "exit", 4) == 0)
+        break;
 
-        memset(buffer, 0, MAX_LENGTH);
-        n = read(sockfd, buffer, MAX_LENGTH - 1);
-        if (n < 0)
-            error("ERROR reading from socket");
+    memset(buffer, 0, MAX_LENGTH);
 
-        printf("Server response: %s\n", buffer);
-       
-    }
+    // Read the response from the server
+    n = read(sockfd, buffer, MAX_LENGTH - 1);
+    if (n < 0)
+        error("ERROR reading from socket");
 
+    printf("Server: %s\n", buffer);
+}
+    printf("Exiting the client\n");
     close(sockfd);
     return 0;
 }
-
