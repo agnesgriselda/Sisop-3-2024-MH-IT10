@@ -9,8 +9,8 @@
 #include <curl/curl.h>
 
 #define PORT 8080
-#define MAX_BUFFER_SIZE 1024
-#define MAX_RESPONSE_SIZE 4096
+#define MAX_BUFFER_SIZE 8192
+#define MAX_RESPONSE_SIZE 8192
 char CSV_FILE_NAME[MAX_BUFFER_SIZE] = "../myanimelist.csv";
 char LOG_FILE_NAME[MAX_BUFFER_SIZE] = "../change.log";
 
@@ -57,11 +57,10 @@ void show(char *token, char *response) {
     fclose(fp);
 
     // Free the allocated memory
-    free(line);
+    free(line);    
 }
 
 void showAll(char *response) {
-    // Open the CSV file for reading
     FILE *fp = fopen("../myanimelist.csv", "r");
     if (fp == NULL) {
         fprintf(stderr, "Error opening CSV file\n");
@@ -77,12 +76,6 @@ void showAll(char *response) {
 
     // Read each line from the file
     while (fgets(line, MAX_BUFFER_SIZE, fp) != NULL) {
-        // Check if there's enough space in the response buffer
-        if (strlen(response) + strlen(line) >= MAX_BUFFER_SIZE) {
-            fprintf(stderr, "Response buffer overflow\n");
-            strcpy(response, "Response buffer overflow\n");
-            break;
-        }
         // Append the line to the response
         strcat(response, line);
     }
@@ -90,6 +83,7 @@ void showAll(char *response) {
     // Close the file
     fclose(fp);
 }
+
 
 void add(char *token, char *response) {
     // Open the CSV file for appending
@@ -335,8 +329,8 @@ void handleRequest(char *buffer, char *response) {
     }
 
     // Clear command and token to avoid residual data
-    memset(buffer, 0, MAX_BUFFER_SIZE);
-    memset(token, 0, MAX_BUFFER_SIZE);
+    memset(buffer, 0, sizeof(buffer));
+    memset(token, 0, sizeof(token));
 }
 
 
@@ -357,7 +351,7 @@ int main() {
     struct sockaddr_in serverAddr, clientAddr;
     socklen_t addrSize;
     char buffer[MAX_BUFFER_SIZE];
-    char *response = (char *)malloc(MAX_RESPONSE_SIZE * sizeof(char));
+    char response[MAX_RESPONSE_SIZE];
 
     // Check if memory allocation succeeded
     if (response == NULL) {
@@ -369,7 +363,6 @@ int main() {
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket < 0) {
         perror("Socket creation failed");
-        free(response);
         return -1;
     }
 
@@ -418,8 +411,6 @@ int main() {
     }
 
     // Free allocated memory and close socket
-    free(response);
     close(serverSocket);
     return 0;
 }
-
