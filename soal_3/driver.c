@@ -9,7 +9,7 @@
 
 
 #define SERVER_IP "127.0.0.1"
-#define PORT 8888
+#define PORT 8000
 
 int main(int argc, char *argv[]) {
     int sockfd;
