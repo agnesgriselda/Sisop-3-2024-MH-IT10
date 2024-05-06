@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-#define PORT 8888
+#define PORT 8000
 
 #include "actions.c"
 
