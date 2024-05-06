@@ -63,16 +63,22 @@ void writeToLog(char* type, int operand1, int operand2, int result) {
     convertToWords(operand2, operand2Str);
     convertToWords(result, resultStr);
 
-    if (strcmp(type, "kurang") == 0) {
+    if (strcmp(type, "KALI") == 0) {
+        fprintf(logFile, "[%s] [%s] %s kali %s sama dengan %s.\n", timestamp, type, operand1Str, operand2Str, resultStr);
+    } else if (strcmp(type, "TAMBAH") == 0) {
+        fprintf(logFile, "[%s] [%s] %s tambah %s sama dengan %s.\n", timestamp, type, operand1Str, operand2Str, resultStr);
+    } else if (strcmp(type, "KURANG") == 0) {
         if (result == 0) {
-            fprintf(logFile, "[%s] [%s] %s %s %s sama dengan nol.\n", timestamp, type, operand1Str, type, operand2Str);
+            fprintf(logFile, "[%s] [%s] %s kurang %s sama dengan nol.\n", timestamp, type, operand1Str, operand2Str);
         } else if (operand1 < operand2) {
             fprintf(logFile, "[%s] [%s] ERROR pada pengurangan.\n", timestamp, type);
         } else {
-            fprintf(logFile, "[%s] [%s] %s %s %s sama dengan %s.\n", timestamp, type, operand1Str, type, operand2Str, resultStr);
+            fprintf(logFile, "[%s] [%s] %s kurang %s sama dengan %s.\n", timestamp, type, operand1Str, operand2Str, resultStr);
         }
+    } else if (strcmp(type, "BAGI") == 0) {
+        fprintf(logFile, "[%s] [%s] %s bagi %s sama dengan %s.\n", timestamp, type, operand1Str, operand2Str, resultStr);
     } else {
-        fprintf(logFile, "[%s] [%s] %s %s %s sama dengan %s.\n", timestamp, type, operand1Str, type, operand2Str, resultStr);
+        printf("Invalid operation type.\n");
     }
     fclose(logFile);
 }
