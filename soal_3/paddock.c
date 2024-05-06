@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-#define PORT 8000
+#define PORT 8ooo
 
 #include "actions.c"
 
@@ -23,6 +23,21 @@ void log_message(char* source, char* command, char* info) {
     char timestamp[20];
     strftime(timestamp, 20, "%d/%m/%Y %H:%M:%S", localtime(&now));
     fprintf(fptr, "[%s] [%s]: [%s] [%s]\n", source, timestamp, command, info);
+    fclose(fptr);
+}
+
+void log_driver_message(char* command, char* info) {
+    FILE *fptr;
+    fptr = fopen("race.log", "a");
+    if (fptr == NULL) {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+    time_t now;
+    time(&now);
+    char timestamp[20];
+    strftime(timestamp, 20, "%d/%m/%Y %H:%M:%S", localtime(&now));
+    fprintf(fptr, "[Driver] [%s]: [%s] [%s]\n", timestamp, command, info);
     fclose(fptr);
 }
 
@@ -64,16 +79,21 @@ int main() {
         if (strcmp(command, "Gap") == 0) {
             float distance = atof(info);
             strcpy(response, Gap(distance));
+            log_driver_message(command, response);
         } else if (strcmp(command, "Fuel") == 0) {
             int fuel = atoi(info);
             strcpy(response, Fuel(fuel));
+            log_driver_message(command, response);
         } else if (strcmp(command, "Tire") == 0) {
             int tire = atoi(info);
             strcpy(response, Tire(tire));
+            log_driver_message(command, response);
         } else if (strcmp(command, "TireChange") == 0) {
             strcpy(response, TireChange(info));
+            log_driver_message(command, response);
         } else {
             strcpy(response, "Unknown command");
+            log_driver_message("Unknown", response);
         }
 
         log_message("Paddock", command, response);
@@ -85,4 +105,3 @@ int main() {
 
     return 0;
 }
-
