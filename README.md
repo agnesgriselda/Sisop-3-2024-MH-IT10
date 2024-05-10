@@ -822,6 +822,50 @@ void handleRequest(char *buffer, char *response) {
 - Setiap perubahan pada data anime dicatat dalam file log dengan format tanggal, jenis perubahan, dan detail perubahan.
 
 # Revisi
+```c
+ if (!found) {
+        strcat(response, "Tidak ada anime pada hari tersebut\n");
+    }
+    } else if (strcmp(command, "genre") == 0) {
+    rewind(file);
+    int count = 1;
+    while (fgets(line, sizeof(line), file) != NULL) {
+        if (line[0] != '\n') {
+            char *token = strtok(line, ",");
+            token = strtok(NULL, ",");
+            if (strcmp(token, parameter) == 0) {
+                token = strtok(NULL, ",");
+                char numberedLine[1028];
+                sprintf(numberedLine, "%d. %s", count, token);
+                strcat(response, numberedLine);
+                strcat(response, "\n");
+                found = 1;
+                count++;
+            }
+        }
+    }
+    if (!found) {
+        strcat(response, "Tidak ada anime dengan genre tersebut\n");
+    }
+    } else if (strcmp(command, "status") == 0) {
+        rewind(file);
+        while (fgets(line, sizeof(line), file) != NULL) {
+            if (line[0] != '\n') {
+                char *token = strtok(line, ",");
+                token = strtok(NULL, ",");
+                token = strtok(NULL, ",");
+                if (strcmp(token, parameter) == 0) {
+                    token = strtok(NULL, "\n");
+                    strcat(response, token);
+                    strcat(response, "\n");
+                    found = 1;
+                }
+            }
+        }
+        if (!found) {
+            strcat(response, "Tidak ada anime dengan status tersebut\n");
+        }
+```
 
 # Dokumentasi Output
 
