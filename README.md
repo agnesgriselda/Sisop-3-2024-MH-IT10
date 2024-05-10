@@ -7,7 +7,7 @@
 
 # Soal 2
 Max Verstappen 🏎️ seorang pembalap F1 dan programer memiliki seorang adik bernama Min Verstappen (masih SD) sedang menghadapi tahap paling kelam dalam kehidupan yaitu perkalian matematika, Min meminta bantuan Max untuk membuat kalkulator perkalian sederhana (satu sampai sembilan). Sembari Max nguli dia menyuruh Min untuk belajar perkalian dari web (referensi) agar tidak bergantung pada kalkulator.
-(Wajib menerapkan konsep pipes dan fork seperti yang dijelaskan di modul Sisop. Gunakan 2 pipes dengan diagram seperti di modul 3).
+__(Wajib menerapkan konsep pipes dan fork seperti yang dijelaskan di modul Sisop. Gunakan 2 pipes dengan diagram seperti di modul 3).__
 
 a. Sesuai request dari adiknya Max ingin nama programnya dudududu.c. Sebelum program parent process dan child process, ada input dari user berupa 2 string. Contoh input: tiga tujuh. 
 
@@ -16,17 +16,17 @@ b. Pada parent process, program akan mengubah input menjadi angka dan melakukan 
 c. Pada child process, program akan mengubah hasil angka yang telah diperoleh dari parent process menjadi kalimat. Contoh: `21` menjadi “dua puluh satu”.
 
 d. Max ingin membuat program kalkulator dapat melakukan penjumlahan, pengurangan, dan pembagian, maka pada program buatlah argumen untuk menjalankan program : 
-	1. perkalian	: ./kalkulator -kali
- 	2. penjumlahan	: ./kalkulator -tambah
-	3. pengurangan	: ./kalkulator -kurang
-	4. pembagian	: ./kalkulator -bagi
+1. perkalian	: ./kalkulator -kali
+2. penjumlahan	: ./kalkulator -tambah
+3. pengurangan	: ./kalkulator -kurang
+4. pembagian	: ./kalkulator -bagi
 Beberapa hari kemudian karena Max terpaksa keluar dari Australian Grand Prix 2024 membuat Max tidak bersemangat untuk melanjutkan programnya sehingga kalkulator yang dibuatnya cuma menampilkan hasil positif jika bernilai negatif maka program akan print “ERROR” serta cuma menampilkan bilangan bulat jika ada bilangan desimal maka dibulatkan ke bawah.
 
 e. Setelah diberi semangat, Max pun melanjutkan programnya dia ingin (pada child process) kalimat akan di print dengan contoh format : 
-	1. perkalian	: “hasil perkalian tiga dan tujuh adalah dua puluh satu.”
-	2. penjumlahan	: “hasil penjumlahan tiga dan tujuh adalah sepuluh.”
-	3. pengurangan	: “hasil pengurangan tujuh dan tiga adalah empat.”
-	4. pembagian	: “hasil pembagian tujuh dan tiga adalah dua.”
+1. perkalian	: “hasil perkalian tiga dan tujuh adalah dua puluh satu.”
+2. penjumlahan	: “hasil penjumlahan tiga dan tujuh adalah sepuluh.”
+3. pengurangan	: “hasil pengurangan tujuh dan tiga adalah empat.”
+4. pembagian	: “hasil pembagian tujuh dan tiga adalah dua.”
 
 f. Max ingin hasil dari setiap perhitungan dicatat dalam sebuah log yang diberi nama histori.log. Pada parent process, lakukan pembuatan file log berdasarkan data yang dikirim dari child process. 
 - Format: [date] [type] [message]
@@ -39,7 +39,7 @@ f. Max ingin hasil dari setiap perhitungan dicatat dalam sebuah log yang diberi 
 # Penyelesaian Soal 2
 Penjelasan Kode :
 
-### File dudududu.c
+### File `dudududu.c`
 
 # Soal 3
 
