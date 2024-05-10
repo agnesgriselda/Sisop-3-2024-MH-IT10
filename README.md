@@ -825,4 +825,14 @@ void handleRequest(char *buffer, char *response) {
 
 # Dokumentasi Output
 
+![Screenshot 2024-05-10 181122](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150202762/daec9697-183d-4ed1-9e3d-e89503366984)
+
+
+
+![Screenshot 2024-05-10 181134](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150202762/297bf17f-ae87-4ca2-849d-e62afea9d30d)
+
+
+![Screenshot 2024-05-10 181307](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150202762/a4c1e127-896a-4dda-8f64-9f6978de0641)
+
+
 
