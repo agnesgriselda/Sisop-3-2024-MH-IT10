@@ -17,7 +17,7 @@ c. Pada child process, program akan mengubah hasil angka yang telah diperoleh da
 
 d. Max ingin membuat program kalkulator dapat melakukan penjumlahan, pengurangan, dan pembagian, maka pada program buatlah argumen untuk menjalankan program : 
 	i. perkalian	: ./kalkulator -kali
-	ii. penjumlahan	: ./kalkulator -tambah
+ 	ii. penjumlahan	: ./kalkulator -tambah
 	iii. pengurangan	: ./kalkulator -kurang
 	iv. pembagian	: ./kalkulator -bagi
 Beberapa hari kemudian karena Max terpaksa keluar dari Australian Grand Prix 2024 membuat Max tidak bersemangat untuk melanjutkan programnya sehingga kalkulator yang dibuatnya cuma menampilkan hasil positif jika bernilai negatif maka program akan print “ERROR” serta cuma menampilkan bilangan bulat jika ada bilangan desimal maka dibulatkan ke bawah.
