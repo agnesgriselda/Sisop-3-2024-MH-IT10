@@ -29,12 +29,12 @@ e. Setelah diberi semangat, Max pun melanjutkan programnya dia ingin (pada child
 	iv. pembagian	: “hasil pembagian tujuh dan tiga adalah dua.”
 
 f. Max ingin hasil dari setiap perhitungan dicatat dalam sebuah log yang diberi nama histori.log. Pada parent process, lakukan pembuatan file log berdasarkan data yang dikirim dari child process. 
-	- Format: [date] [type] [message]
-	- Type: KALI, TAMBAH, KURANG, BAGI
-	- Ex:
-		1. [10/03/24 00:29:47] [KALI] tujuh kali enam sama dengan empat puluh dua.
-		2. [10/03/24 00:30:00] [TAMBAH] sembilan tambah sepuluh sama dengan sembilan belas.
-		3. [10/03/24 00:30:12] [KURANG] ERROR pada pengurangan.
+- Format: [date] [type] [message]
+- Type: KALI, TAMBAH, KURANG, BAGI
+- Ex:
+	1. [10/03/24 00:29:47] [KALI] tujuh kali enam sama dengan empat puluh dua.
+	2. [10/03/24 00:30:00] [TAMBAH] sembilan tambah sepuluh sama dengan sembilan belas.
+	3. [10/03/24 00:30:12] [KURANG] ERROR pada pengurangan.
 
 # Penyelesaian Soal 2
 Penjelasan Kode :
