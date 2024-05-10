@@ -281,6 +281,14 @@ void log_message(char* command, char* info) {
 __Dokumentasi Output__
 
 
+![Screenshot 2024-05-09 183503](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150202762/d8583e0d-0cea-4204-a445-c3679050378d)
+
+
+![Screenshot 2024-05-09 183517](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150202762/441152b0-7180-43c7-9d47-7d65c1097895)
+
+
+![Screenshot 2024-05-09 183541](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150202762/6a0e5414-ea2b-4b01-81a0-932e815154c1)
+
 # Soal 4
 
 Lewis Hamilton 🏎 seorang wibu akut dan sering melewatkan beberapa episode yang karena sibuk menjadi asisten. Maka dari itu dia membuat list anime yang sedang ongoing (biar tidak lupa) dan yang completed (anime lama tapi pengen ditonton aja). Tapi setelah Lewis pikir-pikir malah kepikiran untuk membuat list anime. Jadi dia membuat file (harap diunduh) dan ingin menggunakan socket yang baru saja dipelajarinya untuk melakukan CRUD pada list animenya.
