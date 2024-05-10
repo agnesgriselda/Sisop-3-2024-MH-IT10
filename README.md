@@ -16,17 +16,17 @@ b. Pada parent process, program akan mengubah input menjadi angka dan melakukan 
 c. Pada child process, program akan mengubah hasil angka yang telah diperoleh dari parent process menjadi kalimat. Contoh: `21` menjadi “dua puluh satu”.
 
 d. Max ingin membuat program kalkulator dapat melakukan penjumlahan, pengurangan, dan pembagian, maka pada program buatlah argumen untuk menjalankan program : 
-	i. perkalian	: ./kalkulator -kali
- 	ii. penjumlahan	: ./kalkulator -tambah
-	iii. pengurangan	: ./kalkulator -kurang
-	iv. pembagian	: ./kalkulator -bagi
+	1. perkalian	: ./kalkulator -kali
+ 	2. penjumlahan	: ./kalkulator -tambah
+	3. pengurangan	: ./kalkulator -kurang
+	4. pembagian	: ./kalkulator -bagi
 Beberapa hari kemudian karena Max terpaksa keluar dari Australian Grand Prix 2024 membuat Max tidak bersemangat untuk melanjutkan programnya sehingga kalkulator yang dibuatnya cuma menampilkan hasil positif jika bernilai negatif maka program akan print “ERROR” serta cuma menampilkan bilangan bulat jika ada bilangan desimal maka dibulatkan ke bawah.
 
 e. Setelah diberi semangat, Max pun melanjutkan programnya dia ingin (pada child process) kalimat akan di print dengan contoh format : 
-	i. perkalian	: “hasil perkalian tiga dan tujuh adalah dua puluh satu.”
-	ii. penjumlahan	: “hasil penjumlahan tiga dan tujuh adalah sepuluh.”
-	iii. pengurangan	: “hasil pengurangan tujuh dan tiga adalah empat.”
-	iv. pembagian	: “hasil pembagian tujuh dan tiga adalah dua.”
+	1. perkalian	: “hasil perkalian tiga dan tujuh adalah dua puluh satu.”
+	2. penjumlahan	: “hasil penjumlahan tiga dan tujuh adalah sepuluh.”
+	3. pengurangan	: “hasil pengurangan tujuh dan tiga adalah empat.”
+	4. pembagian	: “hasil pembagian tujuh dan tiga adalah dua.”
 
 f. Max ingin hasil dari setiap perhitungan dicatat dalam sebuah log yang diberi nama histori.log. Pada parent process, lakukan pembuatan file log berdasarkan data yang dikirim dari child process. 
 - Format: [date] [type] [message]
