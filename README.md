@@ -344,7 +344,8 @@ Declare Library
 #include <time.h>
 ```
 
-- Fungsi untuk mengubah kata menjadi angka
+
+- Fungsi untuk mengubah kata menjadi angka. Misalnya "nol" menjadi 0 dan seterusnya hingga angka sembilan. Jika input tidak cocok atau lebih dari angka sembilan maka diubah menjadi -1.
 ```
 void convertToNumber(char* string, int* number) {
     if (strcmp(string, "nol") == 0) {
@@ -374,7 +375,8 @@ void convertToNumber(char* string, int* number) {
 }
 ```
 
-- Fungsi untuk mengubah angka menjadi kata
+
+- Fungsi untuk mengubah angka menjadi kata. Fungsi ini memanfaatkan array `ones` untuk menyimpan kata satuan dan array `tens` untuk angka puluhan.
 ```
 void convertToWords(int number, char* words) {
     char* ones[] = {"", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"};
@@ -394,7 +396,8 @@ void convertToWords(int number, char* words) {
 }
 ```
 
-- Fungsi untuk menulis hasil operasi ke dalam file log
+
+- Fungsi untuk menulis hasil operasi ke dalam file log. Fungsi ini menerima jenis operasi matematika dan menulisnya di file log.
 ```
 void writeToLog(char* type, int operand1, int operand2, int result) {
     FILE* logFile = fopen("histori.log", "a");
@@ -433,7 +436,8 @@ void writeToLog(char* type, int operand1, int operand2, int result) {
 }
 ```
 
-- Fungsi utama
+
+- Fungsi utama. Fungsi ini membuat dua pipe. Fungsi ini melakukan operasi matematika dan menulisnya ke dalam file log.
 ```
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -512,7 +516,8 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-### Dokumentasi Output ###
+
+__Dokumentasi Output__
 ![Screenshot from 2024-05-11 20-10-25](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150429708/efb5b3e6-cee6-4353-895b-ba60c2f40dfb)
 
 ![Screenshot from 2024-05-11 20-10-50](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150429708/1b7993e0-708b-4e3a-862c-e6c8d004be66)
