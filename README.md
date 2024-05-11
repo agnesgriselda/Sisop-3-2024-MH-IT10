@@ -7,10 +7,12 @@
 
 # Soal 1
 Pada zaman dahulu pada galaksi yang jauh-jauh sekali, hiduplah seorang Stelle. Stelle adalah seseorang yang sangat tertarik dengan Tempat Sampah dan Parkiran Luar Angkasa. Stelle memulai untuk mencari Tempat Sampah dan Parkiran yang terbaik di angkasa. Dia memerlukan program untuk bisa secara otomatis mengetahui Tempat Sampah dan Parkiran dengan rating terbaik di angkasa. Programnya berbentuk microservice sebagai berikut:
+
 A. Dalam auth.c pastikan file yang masuk ke folder new-entry adalah file csv dan berakhiran  trashcan dan parkinglot. Jika bukan, program akan secara langsung akan delete file tersebut. 
 Contoh dari nama file yang akan diautentikasi:
 belobog_trashcan.csv
 osaka_parkinglot.csv
+
 B. Format data (Kolom)  yang berada dalam file csv adalah seperti berikut:
 belobog_trashcan.csv
 name, rating
@@ -23,12 +25,17 @@ name, rating
 Dotonbori, 8.6
 Kiseki, 9.7
 Osaka Castle, 8.5
+
 C. File csv yang lolos tahap autentikasi akan dikirim ke shared memory. 
+
 D. Dalam rate.c, proses akan mengambil data csv dari shared memory dan akan memberikan output Tempat Sampah dan Parkiran dengan Rating Terbaik dari data tersebut.
+
 E. Pada db.c, proses bisa memindahkan file dari new-data ke folder microservices/database, WAJIB MENGGUNAKAN SHARED MEMORY.
+
 F. Log semua file yang masuk ke folder microservices/database ke dalam file db.log dengan contoh format sebagai berikut:
 [DD/MM/YY hh:mm:ss] [type] [filename]
 ex : `[07/04/2024 08:34:50] [Trash Can] [belobog_trashcan.csv]
+
 # Penyelesaian Soal Nomer 1 
 ### Auth.c
 
