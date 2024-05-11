@@ -513,7 +513,9 @@ int main(int argc, char *argv[]) {
 ```
 
 ### Dokumentasi Output ###
+![Screenshot from 2024-05-11 20-10-25](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150429708/efb5b3e6-cee6-4353-895b-ba60c2f40dfb)
 
+![Screenshot from 2024-05-11 20-10-50](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/150429708/1b7993e0-708b-4e3a-862c-e6c8d004be66)
 
 
 # Soal 3
