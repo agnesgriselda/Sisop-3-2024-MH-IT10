@@ -1,4 +1,4 @@
-![IMG_1415](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/144348985/c8ae9ed2-592b-4d89-bedb-cccd89f16740)# Modul 3
+# Modul 3
 ## Thread, IPC, & RPC
 
 - Agnes Zenobia __Griselda__ Petrina (5027231034)
