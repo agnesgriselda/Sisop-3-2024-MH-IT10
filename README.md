@@ -5,6 +5,125 @@
 - Muhammad __Nafi__ Firdaus (5027231045)
 - __Rafika__ Az Zahra Kusumastuti (5027231050)
 
+# Soal 1
+Pada zaman dahulu pada galaksi yang jauh-jauh sekali, hiduplah seorang Stelle. Stelle adalah seseorang yang sangat tertarik dengan Tempat Sampah dan Parkiran Luar Angkasa. Stelle memulai untuk mencari Tempat Sampah dan Parkiran yang terbaik di angkasa. Dia memerlukan program untuk bisa secara otomatis mengetahui Tempat Sampah dan Parkiran dengan rating terbaik di angkasa. Programnya berbentuk microservice sebagai berikut:
+A. Dalam auth.c pastikan file yang masuk ke folder new-entry adalah file csv dan berakhiran  trashcan dan parkinglot. Jika bukan, program akan secara langsung akan delete file tersebut. 
+Contoh dari nama file yang akan diautentikasi:
+belobog_trashcan.csv
+osaka_parkinglot.csv
+B. Format data (Kolom)  yang berada dalam file csv adalah seperti berikut:
+belobog_trashcan.csv
+name, rating
+Qlipoth Fort, 9.7
+Everwinter Hill, 8.7
+Rivet Town, 6.0
+atau
+osaka_parkinglot.csv
+name, rating
+Dotonbori, 8.6
+Kiseki, 9.7
+Osaka Castle, 8.5
+C. File csv yang lolos tahap autentikasi akan dikirim ke shared memory. 
+D. Dalam rate.c, proses akan mengambil data csv dari shared memory dan akan memberikan output Tempat Sampah dan Parkiran dengan Rating Terbaik dari data tersebut.
+E. Pada db.c, proses bisa memindahkan file dari new-data ke folder microservices/database, WAJIB MENGGUNAKAN SHARED MEMORY.
+F. Log semua file yang masuk ke folder microservices/database ke dalam file db.log dengan contoh format sebagai berikut:
+[DD/MM/YY hh:mm:ss] [type] [filename]
+ex : `[07/04/2024 08:34:50] [Trash Can] [belobog_trashcan.csv]
+# Penyelesaian Soal Nomer 1 
+### Auth.c
+
+# Proses declare library 
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <dirent.h>
+```
+# Penjelasan kode secara rinci
+```
+#define SHM_SIZE 1024  // Ukuran shared memory maksimum
+
+int main() {
+    DIR *dir;
+    struct dirent *ent;
+    int shm_id;
+    key_t key = 5678;  // Kunci untuk shared memory
+    char *shm_ptr, output[2048], buffer[1024];
+
+    // Membuat shared memory
+    shm_id = shmget(key, SHM_SIZE, IPC_CREAT | 0666);
+    if (shm_id < 0) {
+        perror("shmget");
+        exit(1);
+    }
+
+    // Mengaitkan shared memory
+    shm_ptr = shmat(shm_id, NULL, 0);
+    if (shm_ptr == (void *) -1) {
+        perror("shmat");
+        exit(1);
+    }
+
+    // Buka direktori yang mengandung file baru
+    if ((dir = opendir("new-data")) != NULL) {
+        while ((ent = readdir(dir)) != NULL) {
+            char *filename = ent->d_name;
+
+            // Periksa apakah file adalah .csv dan berakhir dengan _trashcan atau _parkinglot
+            if (strstr(filename, ".csv") != NULL &&
+                (strstr(filename, "trashcan") != NULL || strstr(filename, "parkinglot") != NULL)) {
+                printf("Valid file: %s\n", filename);
+
+                char filepath[256];
+                snprintf(filepath, sizeof(filepath), "new-data/%s", filename);
+                FILE *file = fopen(filepath, "r");
+                if (file == NULL) {
+                    perror("Error opening file");
+                    continue;
+                }
+
+                // Membaca isi file ke shared memory
+                size_t bytes_read = fread(buffer, 1, SHM_SIZE - 1, file);
+                if (ferror(file)) {
+                    perror("Error reading file");
+                } else {
+                    ((char *)buffer)[bytes_read] = '\0';  // Null-terminate the string
+                }
+		sprintf(output, "%s\n%s\n", filename, buffer);
+		strcat(shm_ptr, output);
+	//	printf("%s", output);
+                fclose(file);
+            } else {
+//                printf("Invalid file deleted: %s\n", filename);
+                char fullpath[256];
+                snprintf(fullpath, sizeof(fullpath), "new-data/%s", filename);
+                remove(fullpath);
+            }
+        }
+        closedir(dir);
+    } else {
+        perror("Could not open directory");
+        return 1;
+    }
+    printf("%s", shm_ptr);
+    // Detach dari shared memory
+    shmdt(shm_ptr);
+//    shmctl(shm_id, IPC_RMID, NULL);
+    return 0;
+}
+```
+
+
+
+
+
+
+
 # Soal 2
 Max Verstappen 🏎️ seorang pembalap F1 dan programer memiliki seorang adik bernama Min Verstappen (masih SD) sedang menghadapi tahap paling kelam dalam kehidupan yaitu perkalian matematika, Min meminta bantuan Max untuk membuat kalkulator perkalian sederhana (satu sampai sembilan). Sembari Max nguli dia menyuruh Min untuk belajar perkalian dari web (referensi) agar tidak bergantung pada kalkulator.
 __(Wajib menerapkan konsep pipes dan fork seperti yang dijelaskan di modul Sisop. Gunakan 2 pipes dengan diagram seperti di modul 3).__
