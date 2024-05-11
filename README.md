@@ -1,4 +1,4 @@
-# Modul 3
+![IMG_1415](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/144348985/c8ae9ed2-592b-4d89-bedb-cccd89f16740)# Modul 3
 ## Thread, IPC, & RPC
 
 - Agnes Zenobia __Griselda__ Petrina (5027231034)
@@ -118,9 +118,177 @@ int main() {
 }
 ```
 
+### rate.c
+# Proses Declare Library
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/types.h>
+```
 
+# Penjelasan Kode secara rinci
+```
+#define SHM_SIZE 1024  // Ukuran shared memory
 
+typedef struct {
+    char name[100];
+    float rating;
+} Location;
 
+int main() {
+    int shm_id;
+    key_t key = 5678;  // Key for shared memory
+    char *data;
+
+    // Access the shared memory segment
+    shm_id = shmget(key, SHM_SIZE, IPC_CREAT | 0666);
+    if (shm_id < 0) {
+        perror("shmget");
+        return 1;
+    }
+
+    // Attach to the shared memory
+    data = shmat(shm_id, NULL, 0);
+    if (data == (char *) -1) {
+        perror("shmat");
+        return 1;
+    }
+
+    // Extract filename from the beginning of the shared memory segment
+    char filename[100];
+    sscanf(data, "%[^\n]", filename);
+    
+    // Determine type based on filename
+    char type[20];
+    if (strstr(filename, "trashcan")) {
+        strcpy(type, "Trash Can");
+    } else if (strstr(filename, "parkinglot")) {
+        strcpy(type, "Parking Lot");
+    } else {
+        printf("Unknown type.\n");
+        return 1;
+    }
+
+    // Skip to the next line to process actual CSV data
+    char* csv_data = strchr(data, '\n') + 1;
+
+    // Process CSV data to find the best location
+    Location bestLocation = {"", 0.0};
+    char *line = strtok(csv_data, "\n");
+    while (line != NULL) {
+        Location loc;
+        sscanf(line, "%[^,],%f", loc.name, &loc.rating);
+        if (loc.rating > bestLocation.rating) {
+            bestLocation = loc;  // Update the best location if current one has a higher rating
+        }
+        line = strtok(NULL, "\n");
+    }
+
+    // Detach from shared memory
+    shmdt(data);
+    shmctl(shm_id, IPC_RMID, NULL);
+
+    // Output the best location
+    printf("Type: %s\nFilename: %s\n-------------------\nName: %s\nRating: %.1f\n",
+           type, filename, bestLocation.name, bestLocation.rating);
+
+    return 0;
+}
+```
+
+### db.c
+# Declare Library
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <time.h>
+#include <errno.h>
+#include <dirent.h>
+#include <fcntl.h>
+```
+# Penjelasan Kode Secara Rinci
+```
+#define SHM_SIZE 2048  // Ukuran shared memory
+#define PATH_BUFFER_SIZE 4096  // Ukuran buffer untuk path
+
+int main() {
+    key_t key = 1234;  // Key untuk shared memory
+    int shm_id;
+    char *shm_data;
+    DIR *dir;
+    struct dirent *entry;
+    FILE *log_file;
+
+    // Setup shared memory
+    shm_id = shmget(key, SHM_SIZE, IPC_CREAT | 0666);
+    if (shm_id < 0) {
+        perror("shmget failed");
+        return 1;
+    }
+
+    shm_data = (char *)shmat(shm_id, NULL, 0);
+    if (shm_data == (char *) -1) {
+        perror("shmat failed");
+        return 1;
+    }
+
+    // Buka direktori new-data
+    dir = opendir("/home/nafi/sisopnum1/new-data");
+    if (dir == NULL) {
+        perror("Failed to open directory");
+        return 1;
+    }
+
+    // Baca file pertama dari direktori
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_type == DT_REG) {
+            // Tulis nama file ke shared memory
+            strncpy(shm_data, entry->d_name, SHM_SIZE);
+            break;  // Hanya memindahkan satu file per eksekusi
+        }
+    }
+
+    // Konstruksi path asal dan tujuan
+    char source_path[PATH_BUFFER_SIZE], dest_path[PATH_BUFFER_SIZE];
+    snprintf(source_path, sizeof(source_path), "/home/nafi/sisopnum1/new-data/%s", shm_data);
+    snprintf(dest_path, sizeof(dest_path), "/home/nafi/sisopnum1/microservices/database/%s", shm_data);
+
+    // Memindahkan file
+    if (rename(source_path, dest_path) == 0) {
+        // Logging ke db.log
+        log_file = fopen("/home/nafi/sisopnum1/microservices/database/db.log", "a");
+        if (log_file != NULL) {
+            time_t now = time(NULL);
+            struct tm *t = localtime(&now);
+            fprintf(log_file, "[%02d/%02d/%04d %02d:%02d:%02d] [Type] [%s]\n",
+                    t->tm_mday, t->tm_mon + 1, t->tm_year + 1900,
+                    t->tm_hour, t->tm_min, t->tm_sec, shm_data);
+            fclose(log_file);
+        }
+    } else {
+        fprintf(stderr, "Failed to move file %s to %s: %s\n", source_path, dest_path, strerror(errno));
+    }
+
+    // Cleanup
+    shmdt(shm_data);
+    shmctl(shm_id, IPC_RMID, NULL);
+    closedir(dir);
+
+    return 0;
+}
+```
+# OUTPUT
+![IMG_1414](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/144348985/e1366f46-29fa-4a9c-b163-fc5303bc5f76)
+![IMG_1415](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/144348985/29193ac2-82b2-437c-a869-b36f37a568e9)
+![IMG_1416](https://github.com/agnesgriselda/Sisop-3-2024-MH-IT10/assets/144348985/9b6b08ce-0db5-4100-a075-0934742df6a3)
 
 
 
